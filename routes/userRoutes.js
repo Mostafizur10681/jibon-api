@@ -11,4 +11,5 @@ router.post('/signup', signupUser);
 router.post('/login', loginUser);
 
 
+// export router
 module.exports = router;
