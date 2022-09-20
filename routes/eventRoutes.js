@@ -8,11 +8,12 @@ const {
   deleteEvent,
 } = require("../controllers/eventController");
 const requireAuth = require("../middleware/requireAuth");
+const requireAdmin = require("../middleware/requireAdmin");
 
 const router = express();
 
 // create a event
-router.post("/addEvent", requireAuth, createEvent);
+router.post("/addEvent", requireAuth, requireAdmin, createEvent);
 
 // get all events
 router.get("/getEvents", getEvents);
@@ -21,9 +22,9 @@ router.get("/getEvents", getEvents);
 router.get("/getEvent/:id", getEvent);
 
 // update a event
-router.put("/updateEvent/:id", updateEvent);
+router.put("/updateEvent/:id", requireAuth, requireAdmin, updateEvent);
 
 // delete a event
-router.delete("/deleteEvent/:id", deleteEvent);
+router.delete("/deleteEvent/:id", requireAuth, requireAdmin, deleteEvent);
 
 module.exports = router;

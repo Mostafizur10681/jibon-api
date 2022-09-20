@@ -4,6 +4,8 @@ const {
   loginUser,
   updateUser,
 } = require("../controllers/userController");
+const requireAdmin = require("../middleware/requireAdmin");
+const requireAuth = require("../middleware/requireAuth");
 
 // express router
 const router = express();
@@ -15,11 +17,11 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 
 // update
-router.patch('/upateduser/:id', updateUser);
+router.patch("/updatedUser/:id", requireAuth, requireAdmin, updateUser);
 
-// =======
-router.patch("/:id", updateUser);
-
+router.delete("/deleteUser/:id", requireAuth, requireAdmin, updateUser);
+router.get("/singleUser/:id", requireAuth, requireAdmin, updateUser);
+router.get("/allUser", requireAuth, requireAdmin, updateUser);
 
 // export router
 module.exports = router;
