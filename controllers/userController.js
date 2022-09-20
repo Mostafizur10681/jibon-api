@@ -7,11 +7,11 @@ const UserModel = require('../models/userModel');
 // signup controller
 const signupUser = async (req, res) => {
 
-    // get name, email, password from user
-    const { name, email, password } = req.body;
+    // get all info from user
+    const { name, email, password, address, phone, aboutInfo, } = req.body;
 
     try {
-        const user = await UserModel.signup(name, email, password);
+        const user = await UserModel.signup({ name, email, password, address, phone, aboutInfo, role });
 
         // successfull status
         res.status(200).json({ name, email })
@@ -25,6 +25,7 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
+
     try {
 
         const user = await UserModel.login(email, password);
@@ -37,8 +38,48 @@ const loginUser = async (req, res) => {
 
 };
 
+// update user Info
+// const updateUser = async (req, res) => {
+//     const { id } = req.params;
+
+//     try {
+//         const user = await UserModel.findOneAndUpdate({ _id: id }, { ...req.body })
+//         res.status(200).json(user);
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// }
+
+
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await UserModel.findOneAndUpdate({ _id: id }, {
+            $set: {
+                name: req.body?.name,
+                email: req.body?.email,
+                password: req.body?.password,
+                address: req.body?.address,
+                phone: req.body?.phone,
+                aboutInfo: req.body?.aboutInfo
+            }
+
+        },
+            {
+                new: true,
+                findAndModify: false,
+            }
+        );
+        res.status(200).json(user)
+
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 // export module
 module.exports = {
     signupUser,
-    loginUser
+    loginUser,
+    updateUser
 }

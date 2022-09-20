@@ -10,26 +10,42 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {
         type: String,
-        require: true,
+        require: true
     },
     email: {
         type: String,
         require: true,
-        unique: true,
+        unique: true
     },
     password: {
+        type: String,
+        require: true
+    },
+    address: {
+        type: String,
+        require: true
+    },
+    phone: {
+        type: Number,
+        require: true
+    },
+    aboutInfo: {
+        type: String,
+        require: true
+    },
+    role: {
         type: String,
         require: true
     }
 });
 
 // statics signup method
-userSchema.statics.signup = async function (name, email, password) {
+userSchema.statics.signup = async function (name, email, password, address, phone, aboutInfo, role) {
 
     const exists = await this.findOne({ email });
 
     // Input field check
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !address || !phone || !aboutInfo) {
         throw Error("All fields must be filled");
     }
 
@@ -43,7 +59,7 @@ userSchema.statics.signup = async function (name, email, password) {
     const hash = await bcrypt.hash(password, salt);
 
     // create a user with name, email, password
-    const user = await this.create({ name, email, password: hash });
+    const user = await this.create({ name, email, password: hash, address, phone, aboutInfo, role: "Valunteer" });
 
     return user;
 };
