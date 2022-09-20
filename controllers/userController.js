@@ -3,18 +3,22 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 
+const createToken = (_id) => {
+    return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" });
+};
 
 // signup controller
 const signupUser = async (req, res) => {
 
     // get all info from user
-    const { name, email, password, address, phone, aboutInfo, } = req.body;
+    const { name, email, password, address, phone, aboutInfo } = req.body;
 
     try {
-        const user = await UserModel.signup({ name, email, password, address, phone, aboutInfo, role });
+        const user = await UserModel.signup(name, email, password, address, phone, aboutInfo);
 
+        const token = createToken(user._id);
         // successfull status
-        res.status(200).json({ name, email })
+        res.status(200).json({ email, token });
     } catch (error) {
         // error status
         res.status(400).json({ error: error.message })
@@ -25,12 +29,14 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
-
     try {
 
         const user = await UserModel.login(email, password);
 
-        res.status(200).json({ email })
+        // create a token
+        const token = createToken(user._id);
+
+        res.status(200).json({ email, token });
     } catch (error) {
 
         res.status(400).json({ error: error.message });
@@ -67,7 +73,7 @@ const updateUser = async (req, res) => {
         },
             {
                 new: true,
-                findAndModify: false,
+                upsert: true,
             }
         );
         res.status(200).json(user)

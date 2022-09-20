@@ -34,13 +34,12 @@ const userSchema = new Schema({
         require: true
     },
     role: {
-        type: String,
-        require: true
+        type: String
     }
 });
 
 // statics signup method
-userSchema.statics.signup = async function (name, email, password, address, phone, aboutInfo, role) {
+userSchema.statics.signup = async function (name, email, password, address, phone, aboutInfo) {
 
     const exists = await this.findOne({ email });
 

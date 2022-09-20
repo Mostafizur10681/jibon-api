@@ -11,7 +11,7 @@ router.post('/signup', signupUser);
 router.post('/login', loginUser);
 
 // update
-router.patch('/:id', updateUser);
+router.patch('/upateduser/:id', updateUser);
 
 
 // export router
