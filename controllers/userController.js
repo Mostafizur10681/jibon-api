@@ -5,7 +5,7 @@ const UserModel = require('../models/userModel');
 require("dotenv").config();
 
 const createToken = (_id) => {
-    return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" });
+    return jwt.sign({ _id }, `${process.env.ACCESS_TOKEN_SECRET}`, { expiresIn: "3d" });
 };
 
 // signup controller
@@ -17,7 +17,10 @@ const signupUser = async (req, res) => {
     try {
         const user = await UserModel.signup(name, email, password, address, phone, aboutInfo);
 
+
         res.status(200).json({ name, email });
+
+        res.status(200).json(email);
     } catch (error) {
 
         res.status(400).json({ error: error.message })

@@ -19,17 +19,19 @@ router.post("/signup", signupUser);
 // login
 router.post("/login", loginUser);
 
-// update
-router.patch('/admin/upateduser/:id', requireAuth, requireAdmin, updateUser);
-
-// all users
-router.get('/admin/alluser', requireAuth, requireAdmin, allUser);
+// all user
+router.get("/allUser", requireAuth, requireAdmin, allUser);
 
 // single user
-router.get('/admin/:id', requireAuth, requireAdmin, singleUser);
+router.get("/singleUser/:id", requireAuth, requireAdmin, singleUser);
+
+// update
+router.patch("/updatedUser/:id", requireAuth, requireAdmin, updateUser);
 
 // delete user
-router.delete('/admin/:id', requireAuth, requireAdmin, deleteUser);
+router.delete("/deleteUser/:id", requireAuth, requireAdmin, deleteUser);
+
+
 
 // export router
 module.exports = router;

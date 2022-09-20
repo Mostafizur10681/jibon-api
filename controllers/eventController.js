@@ -22,7 +22,7 @@ const createEvent = async (req, res) => {
 // get all events
 const getEvents = async (req, res) => {
   try {
-    const events = await EventModel.find({});
+    const events = await EventModel.find({}).limit(8);
     res.status(200).json({
       events,
       message: "Events gets successfully!",

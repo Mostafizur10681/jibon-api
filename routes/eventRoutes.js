@@ -22,9 +22,9 @@ router.get("/getEvents", getEvents);
 router.get("/getEvent/:id", getEvent);
 
 // update a event
-router.put("/updateEvent/:id", updateEvent);
+router.put("/updateEvent/:id", requireAuth, requireAdmin, updateEvent);
 
 // delete a event
-router.delete("/deleteEvent/:id", deleteEvent);
+router.delete("/deleteEvent/:id", requireAuth, requireAdmin, deleteEvent);
 
 module.exports = router;
