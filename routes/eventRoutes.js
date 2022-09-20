@@ -8,11 +8,12 @@ const {
   deleteEvent,
 } = require("../controllers/eventController");
 const requireAuth = require("../middleware/requireAuth");
+const requireAdmin = require("../middleware/requireAdmin");
 
 const router = express();
 
 // create a event
-router.post("/addEvent", requireAuth, createEvent);
+router.post("/addEvent", requireAuth, requireAdmin, createEvent);
 
 // get all events
 router.get("/getEvents", getEvents);

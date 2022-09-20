@@ -17,11 +17,9 @@ const signupUser = async (req, res) => {
     try {
         const user = await UserModel.signup(name, email, password, address, phone, aboutInfo);
 
-        const token = createToken(user._id);
-        // successfull status
-        res.status(200).json({ email, token });
+        res.status(200).json({ name, email });
     } catch (error) {
-        // error status
+
         res.status(400).json({ error: error.message })
     }
 };
@@ -45,6 +43,37 @@ const loginUser = async (req, res) => {
 
 };
 
+// get all user
+const allUser = async (req, res) => {
+    try {
+        const users = await UserModel.find({});
+        res.status(200).json({ users, message: "These are all users" })
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+
+}
+
+// get single user
+const singleUser = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await UserModel.findById({ _id: id });
+        if (!user) {
+            return res.status(400).json({ error: "This is not a user" });
+        } else {
+            res.status(200).json({
+                user,
+                message: "This is single user",
+            });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+// update user
 const updateUser = async (req, res) => {
     const { id } = req.params;
     try {
@@ -71,9 +100,28 @@ const updateUser = async (req, res) => {
     }
 }
 
+// delete user
+const deleteUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await UserModel.findOneAndDelete({ _id: id });
+
+        if (!user) {
+            return res.status(400).json({ error: "Not such a User" });
+        } else {
+            res.status(200).json({ user, message: "User deleted successfully!" });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+}
+
 // export module
 module.exports = {
     signupUser,
     loginUser,
-    updateUser
+    updateUser,
+    allUser,
+    singleUser,
+    deleteUser
 }

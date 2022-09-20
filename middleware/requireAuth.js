@@ -16,11 +16,13 @@ const requireAuth = async (req, res, next) => {
 
   try {
     const { _id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
     req.user = await UserModel.findOne({ _id }).select("_id");
+
     next();
   } catch (error) {
-    console.log(error.message);
-    return res.status(403).send({ message: 'Forbidden Acess' })
+
+    return res.status(403).send({ message: 'Forbidden Access' })
   }
 
 };
