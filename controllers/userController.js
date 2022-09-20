@@ -2,6 +2,7 @@
 // import json web token
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
+require("dotenv").config();
 
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "3d" });
