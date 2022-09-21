@@ -17,6 +17,9 @@ const requireAdmin = async (req, res, next) => {
             if (req.user.role === "admin") {
                 next();
             }
+            else if (req.user.role !== 'admin') {
+                res.status(401).send({ message: "Unauthorized User" });
+            }
         } catch (error) {
             res.status(401).send({ message: "Unauthorized User" });
         }

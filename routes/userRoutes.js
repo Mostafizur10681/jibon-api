@@ -20,16 +20,16 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 
 // all user
-router.get("/allUser", requireAuth, requireAdmin, allUser);
+router.get("/admin/allUser", requireAuth, requireAdmin, allUser);
 
 // single user
-router.get("/singleUser/:id", requireAuth, requireAdmin, singleUser);
+router.get("/admin/singleUser/:id", requireAuth, requireAdmin, singleUser);
 
 // update
-router.patch("/updatedUser/:id", requireAuth, requireAdmin, updateUser);
+router.patch("/admin/updatedUser/:id", requireAuth, requireAdmin, updateUser);
 
 // delete user
-router.delete("/deleteUser/:id", requireAuth, requireAdmin, deleteUser);
+router.delete("/admin/deleteUser/:id", requireAuth, requireAdmin, deleteUser);
 
 
 

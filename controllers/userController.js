@@ -17,10 +17,7 @@ const signupUser = async (req, res) => {
     try {
         const user = await UserModel.signup(name, email, password, address, phone, aboutInfo);
 
-
         res.status(200).json({ name, email });
-
-        res.status(200).json(email);
     } catch (error) {
 
         res.status(400).json({ error: error.message })
@@ -64,11 +61,11 @@ const singleUser = async (req, res) => {
     try {
         const user = await UserModel.findById({ _id: id });
         if (!user) {
-            return res.status(400).json({ error: "This is not a user" });
+            return res.status(400).json({ error: "Not such a user" });
         } else {
             res.status(200).json({
                 user,
-                message: "This is single user",
+                message: "This is a single user",
             });
         }
     } catch (error) {
