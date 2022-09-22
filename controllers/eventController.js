@@ -8,7 +8,7 @@ const createEvent = async (req, res) => {
       title,
       img,
       description,
-      progress:"live",
+      progress: "ongoing",
     });
     res.status(200).json({
       event,

@@ -14,28 +14,26 @@ const requireAuth = require("../middleware/requireAuth");
 // express router
 const router = express();
 
-// signup
+// signup user
 router.post("/signup", signupUser);
 
-// login
+// login user
 router.post("/login", loginUser);
 
-// all user
+// all users
 router.get("/admin/allUser", requireAuth, requireAdmin, allUser);
 
 // single user
 router.get("/admin/singleUser/:id", requireAuth, requireAdmin, singleUser);
 
-// update user
-router.post('/admin/createUser', requireAuth, requireAdmin, createUser);
+// create user
+router.post("/admin/createUser", requireAuth, requireAdmin, createUser);
 
-// update
+// update user
 router.patch("/admin/updatedUser/:id", requireAuth, requireAdmin, updateUser);
 
 // delete user
 router.delete("/admin/deleteUser/:id", requireAuth, requireAdmin, deleteUser);
-
-
 
 // export router
 module.exports = router;

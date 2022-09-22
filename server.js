@@ -1,24 +1,15 @@
-// import express
 const express = require("express");
 require("dotenv").config();
+const mongoose = require("mongoose");
+const app = express();
+app.use(express.json());
+const port = process.env.PORT || 5000;
+
 const userRoutes = require("./routes/userRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 
-// import mongoose
-const mongoose = require("mongoose");
-
-// port = 5000
-const port = process.env.PORT || 5000;
-
-// app
-const app = express();
-
-// middleware
-app.use(express.json());
-
-// user routes
+// routes for user
 app.use("/user", userRoutes);
-
 // routes for event
 app.use("/event", eventRoutes);
 
