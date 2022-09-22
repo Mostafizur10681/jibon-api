@@ -3,6 +3,7 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 require("dotenv").config();
+const bcrypt = require('bcrypt');
 
 const createToken = (_id) => {
     return jwt.sign({ _id }, `${process.env.ACCESS_TOKEN_SECRET}`, { expiresIn: "3d" });
@@ -73,6 +74,24 @@ const singleUser = async (req, res) => {
     }
 }
 
+// create user
+const createUser = async (req, res) => {
+    const { name, email, address, phone, aboutInfo } = req.body;
+
+    if (!name || !email || !address || !phone || !aboutInfo) {
+        throw Error("All fields must be filled");
+    }
+
+    try {
+        const password = (Math.random() + 1).toString(36).substring(7);
+
+        const user = await UserModel.create({ name, email, password, address, phone, aboutInfo, role: "volunteer" });
+
+        res.status(200).json({ user, message: "User created successfully!" });
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
 // update user
 const updateUser = async (req, res) => {
     const { id } = req.params;
@@ -123,5 +142,6 @@ module.exports = {
     updateUser,
     allUser,
     singleUser,
-    deleteUser
+    deleteUser,
+    createUser
 }

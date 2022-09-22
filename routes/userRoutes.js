@@ -6,6 +6,7 @@ const {
   allUser,
   singleUser,
   deleteUser,
+  createUser,
 } = require("../controllers/userController");
 const requireAdmin = require("../middleware/requireAdmin");
 const requireAuth = require("../middleware/requireAuth");
@@ -24,6 +25,9 @@ router.get("/admin/allUser", requireAuth, requireAdmin, allUser);
 
 // single user
 router.get("/admin/singleUser/:id", requireAuth, requireAdmin, singleUser);
+
+// update user
+router.post('/admin/createUser', requireAuth, requireAdmin, createUser);
 
 // update
 router.patch("/admin/updatedUser/:id", requireAuth, requireAdmin, updateUser);
